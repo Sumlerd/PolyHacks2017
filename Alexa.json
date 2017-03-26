@@ -1,0 +1,22 @@
+{
+  "intents": [
+    {
+      "intent": "GetImage",
+      "slots": [
+        {
+          "name": "Query",
+          "type": "LIST_OF_QUERIES"
+        }
+      ]
+    },
+    {
+      "intent": "NoComprende"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}
