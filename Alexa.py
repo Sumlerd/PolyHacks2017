@@ -10,7 +10,6 @@ from __future__ import print_function
 import socket
 import json
 
-
 # --------------- Helpers that build all of the responses ----------------------
 
 def build_speechlet_response(title, output, reprompt_text, should_end_session):
@@ -80,7 +79,6 @@ def not_valid():
         card_title, speech_output, None, should_end_session))
 
 def search_for_image(intent):
-    #search_query
     card_title = "Searching for Image"
     speech_output = "Let me see if I can find that for you. "
     should_end_session = False
@@ -88,15 +86,14 @@ def search_for_image(intent):
     if "Query" in intent["slots"]:
         search_query = intent["slots"]["Query"]["value"]
         talk_to_server("1" + search_query)
-    
+
     return build_response({}, build_speechlet_response(
         card_title, speech_output, None, should_end_session))
     
         
 def talk_to_server(search_query):
-    #speech_output = "I found a " + search_query + " for you."
     target_host = "54.82.154.148"
-    target_port = 5012
+    target_port = 5014
     
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
@@ -104,29 +101,9 @@ def talk_to_server(search_query):
     
     client.send(search_query)
     
-    client.recv(10)
-    #found_something(search_query)
-        
-    client.close
+    client.close()
+
     
-    #return build_response({}, build_speechlet_response(
-     #   None, speech_output, None, False))
-    
-def found_something(search_query):
-    speech_output = "I found a " + search_query + " for you."
-    should_end_session = False
-    card_title = "Found"
-
-    return build_response({}, build_speechlet_response(
-        card_title, speech_output, None, should_end_session))
-
-def find_something():
-    speech_output = "Let me see if I can find that for you"
-    should_end_session = False
-    card_title = "Find"
-
-    return build_response({}, build_speechlet_response(
-        card_title, speech_output, None, should_end_session))
 
 # --------------- Events ------------------
 
@@ -160,6 +137,8 @@ def on_intent(intent_request, session):
     # Dispatch to your skill's intent handlers
     if intent_name == "GetImage":
         return search_for_image(intent)
+    elif intent_name == "NoComprende":
+        return not_Valid()
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
